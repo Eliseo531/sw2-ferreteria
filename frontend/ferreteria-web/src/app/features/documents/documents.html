@@ -1,0 +1,103 @@
+<div class="page-header">
+  <div>
+    <h1>Documentos</h1>
+    <p>Gestión documental conectada con S3 y DynamoDB</p>
+  </div>
+
+  <button (click)="showForm = !showForm">
+    {{ showForm ? 'Cancelar' : 'Subir documento' }}
+  </button>
+</div>
+
+<div class="form-card" *ngIf="showForm">
+  <h2>Subir documento</h2>
+
+  <form (ngSubmit)="uploadAndRegisterDocument()">
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Nombre del documento</label>
+        <input name="nombre" [(ngModel)]="form.nombre" />
+      </div>
+
+      <div class="form-group">
+        <label>Tipo documento</label>
+        <select name="tipoDocumento" [(ngModel)]="form.tipoDocumento">
+          <option value="MANUAL_TECNICO">MANUAL_TECNICO</option>
+          <option value="FICHA_SEGURIDAD">FICHA_SEGURIDAD</option>
+          <option value="CERTIFICADO_CALIDAD">CERTIFICADO_CALIDAD</option>
+          <option value="GARANTIA">GARANTIA</option>
+          <option value="CONTRATO_PROVEEDOR">CONTRATO_PROVEEDOR</option>
+          <option value="FACTURA_ESCANEADA">FACTURA_ESCANEADA</option>
+          <option value="COMPROBANTE_ENTREGA">COMPROBANTE_ENTREGA</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Relacionado a</label>
+        <select name="relatedType" [(ngModel)]="form.relatedType">
+          <option value="PRODUCTO">PRODUCTO</option>
+          <option value="PROVEEDOR">PROVEEDOR</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>ID relacionado</label>
+        <input name="relatedId" type="number" [(ngModel)]="form.relatedId" />
+      </div>
+
+      <div class="form-group">
+        <label>Fecha vencimiento</label>
+        <input name="fechaVencimiento" type="date" [(ngModel)]="form.fechaVencimiento" />
+      </div>
+
+      <div class="form-group">
+        <label>Archivo</label>
+        <input type="file" (change)="onFileSelected($event)" />
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="saving">
+      {{ saving ? 'Subiendo...' : 'Subir y registrar' }}
+    </button>
+  </form>
+</div>
+
+<div *ngIf="successMessage" class="success">
+  {{ successMessage }}
+</div>
+
+<div *ngIf="loading" class="message">Cargando documentos...</div>
+
+<div *ngIf="errorMessage" class="error">
+  {{ errorMessage }}
+</div>
+
+<div class="table-card" *ngIf="!loading && !errorMessage">
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Tipo</th>
+        <th>Producto</th>
+        <th>Proveedor</th>
+        <th>Archivo</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let doc of documents">
+        <td>{{ doc.idDocumento }}</td>
+        <td>{{ doc.nombre }}</td>
+        <td>{{ doc.tipoDocumento }}</td>
+        <td>{{ doc.idProducto || '-' }}</td>
+        <td>{{ doc.idProveedor || '-' }}</td>
+        <td>{{ doc.urlArchivo }}</td>
+        <td>
+          <span class="badge">{{ doc.estado }}</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

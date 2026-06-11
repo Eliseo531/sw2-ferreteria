@@ -1,0 +1,143 @@
+<div class="page-header">
+  <div>
+    <h1>Inventario</h1>
+    <p>Control de stock, movimientos y alertas de productos</p>
+  </div>
+
+  <button (click)="generateAlerts()">Generar alertas de stock bajo</button>
+</div>
+
+<div *ngIf="successMessage" class="success">
+  {{ successMessage }}
+</div>
+
+<div *ngIf="errorMessage" class="error">
+  {{ errorMessage }}
+</div>
+
+<section class="summary-grid">
+  <div class="summary-card">
+    <span>Total productos</span>
+    <strong>{{ products.length }}</strong>
+  </div>
+
+  <div class="summary-card warning">
+    <span>Stock bajo</span>
+    <strong>
+      {{ products.filter((p) => getStockStatus(p) === 'STOCK_BAJO').length }}
+    </strong>
+  </div>
+
+  <div class="summary-card danger">
+    <span>Agotados</span>
+    <strong>
+      {{ products.filter((p) => getStockStatus(p) === 'AGOTADO').length }}
+    </strong>
+  </div>
+
+  <div class="summary-card">
+    <span>Alertas pendientes</span>
+    <strong>{{ alerts.length }}</strong>
+  </div>
+</section>
+
+<div *ngIf="loading" class="message">Cargando inventario...</div>
+
+<div class="table-card" *ngIf="!loading">
+  <h2>Stock de productos</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Código</th>
+        <th>Producto</th>
+        <th>Stock actual</th>
+        <th>Stock mínimo</th>
+        <th>Precio</th>
+        <th>Estado stock</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let product of products">
+        <td>{{ product.idProducto }}</td>
+        <td>{{ product.codigoBarras || '-' }}</td>
+        <td>{{ product.nombre }}</td>
+        <td>{{ product.stockActual }}</td>
+        <td>{{ product.stockMinimo }}</td>
+        <td>Bs {{ product.precioVenta }}</td>
+        <td>
+          <span
+            class="badge"
+            [class.badge-ok]="getStockStatus(product) === 'NORMAL'"
+            [class.badge-warning]="getStockStatus(product) === 'STOCK_BAJO'"
+            [class.badge-danger]="getStockStatus(product) === 'AGOTADO'"
+          >
+            {{ getStockStatus(product) }}
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="table-card" *ngIf="!loadingMovements">
+  <h2>Últimos movimientos de inventario</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Producto</th>
+        <th>Tipo</th>
+        <th>Cantidad</th>
+        <th>Stock anterior</th>
+        <th>Stock nuevo</th>
+        <th>Motivo</th>
+        <th>Fecha</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let movement of movements">
+        <td>{{ movement.idMovimiento }}</td>
+        <td>{{ movement.idProducto }}</td>
+        <td>{{ movement.tipoMovimiento }}</td>
+        <td>{{ movement.cantidad }}</td>
+        <td>{{ movement.stockAnterior }}</td>
+        <td>{{ movement.stockNuevo }}</td>
+        <td>{{ movement.motivo || '-' }}</td>
+        <td>{{ movement.fechaMovimiento | date: 'short' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="table-card" *ngIf="!loadingAlerts">
+  <h2>Alertas pendientes</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Producto</th>
+        <th>Tipo</th>
+        <th>Mensaje</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let alert of alerts">
+        <td>{{ alert.idAlerta }}</td>
+        <td>{{ alert.idProducto || '-' }}</td>
+        <td>{{ alert.tipoAlerta }}</td>
+        <td>{{ alert.mensaje }}</td>
+        <td>
+          <span class="badge badge-warning">{{ alert.estado }}</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

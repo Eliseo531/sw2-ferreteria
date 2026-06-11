@@ -1,0 +1,649 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Alert {
+  estado: String!
+  fechaAtencion: DateTime
+  fechaCreacion: DateTime!
+  idAlerta: Int!
+  idProducto: Int
+  mensaje: String!
+  tipoAlerta: String!
+}
+
+input AssignDeliveryDriverInput {
+  idEntrega: Int!
+  idRepartidor: Int!
+}
+
+type AuthResponse {
+  accessToken: String!
+  user: User!
+}
+
+type BlockchainRecord {
+  estado: String!
+  fechaRegistro: DateTime!
+  hashDocumento: String!
+  idReferencia: Int!
+  idRegistro: Int!
+  redBlockchain: String
+  tipoDocumento: String!
+  txHash: String
+}
+
+type Brand {
+  descripcion: String
+  estado: String!
+  idMarca: Int!
+  nombre: String!
+}
+
+input CancelPurchaseInput {
+  idCompra: Int!
+  motivo: String
+}
+
+input CancelSaleInput {
+  idVenta: Int!
+  motivo: String
+}
+
+type Category {
+  descripcion: String
+  estado: String!
+  idCategoria: Int!
+  nombre: String!
+}
+
+input CreateAlertInput {
+  idProducto: Int
+  mensaje: String!
+  tipoAlerta: String!
+}
+
+input CreateBlockchainRecordInput {
+  hashDocumento: String!
+  idReferencia: Int!
+  redBlockchain: String
+  tipoDocumento: String!
+  txHash: String
+}
+
+input CreateBrandInput {
+  descripcion: String
+  nombre: String!
+}
+
+input CreateCategoryInput {
+  descripcion: String
+  nombre: String!
+}
+
+input CreateCustomerInput {
+  apellido: String
+  direccion: String
+  email: String
+  nitCi: String
+  nombre: String!
+  telefono: String
+  tipoCliente: String
+}
+
+input CreateDeliveryInput {
+  direccionEntrega: String!
+  idPedido: Int!
+  idRepartidor: Int
+  latitudEntrega: Float
+  longitudEntrega: Float
+  observacion: String
+}
+
+input CreateDocumentInput {
+  fechaVencimiento: String
+  idProducto: Int
+  idProveedor: Int
+  nombre: String!
+  tipoDocumento: String!
+  urlArchivo: String!
+}
+
+input CreateInventoryMovementInput {
+  cantidad: Int!
+  idProducto: Int!
+  idUsuario: Int!
+  motivo: String
+  tipoMovimiento: String!
+}
+
+input CreateLocationInput {
+  descripcion: String
+  estante: String
+  idAlmacen: Int!
+  nivel: String
+  pasillo: String
+}
+
+input CreateOrderDetailInput {
+  cantidad: Int!
+  idProducto: Int!
+  precioEstimado: Float!
+}
+
+input CreateOrderInput {
+  detalles: [CreateOrderDetailInput!]!
+  idCliente: Int
+  idUsuarioRegistro: Int
+  observacion: String
+  origen: String!
+}
+
+input CreateProductInput {
+  codigoBarras: String
+  descripcion: String
+  idCategoria: Int!
+  idMarca: Int
+  idUbicacion: Int
+  idUnidad: Int!
+  nombre: String!
+  precioCompraReferencia: Float
+  precioVenta: Float!
+  stockActual: Int
+  stockMinimo: Int
+}
+
+input CreatePurchaseDetailInput {
+  cantidad: Int!
+  idProducto: Int!
+  precioUnitario: Float!
+}
+
+input CreatePurchaseInput {
+  detalles: [CreatePurchaseDetailInput!]!
+  idProveedor: Int!
+  idUsuario: Int!
+  observacion: String
+}
+
+input CreateRoleInput {
+  descripcion: String
+  nombre: String!
+}
+
+input CreateSaleDetailInput {
+  cantidad: Int!
+  idProducto: Int!
+  precioUnitario: Float!
+}
+
+input CreateSaleInput {
+  detalles: [CreateSaleDetailInput!]!
+  idCliente: Int
+  idUsuario: Int!
+  metodoPago: String!
+  observacion: String
+}
+
+input CreateSupplierInput {
+  direccion: String
+  email: String
+  nit: String
+  nombre: String!
+  telefono: String
+}
+
+input CreateUnitInput {
+  abreviatura: String!
+  nombre: String!
+}
+
+input CreateUserInput {
+  apellido: String!
+  email: String!
+  nombre: String!
+  password: String!
+  telefono: String
+}
+
+input CreateWarehouseInput {
+  descripcion: String
+  direccion: String
+  nombre: String!
+}
+
+type Customer {
+  apellido: String
+  direccion: String
+  email: String
+  estado: String!
+  fechaRegistro: DateTime!
+  idCliente: Int!
+  nitCi: String
+  nombre: String!
+  telefono: String
+  tipoCliente: String!
+}
+
+type DashboardSummary {
+  alertasPendientes: Int!
+  entregasPendientes: Int!
+  montoTotalCompras: Float!
+  montoTotalVentas: Float!
+  pedidosPendientes: Int!
+  totalClientes: Int!
+  totalCompras: Int!
+  totalProductos: Int!
+  totalProveedores: Int!
+  totalVentas: Int!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Delivery {
+  direccionEntrega: String!
+  estado: String!
+  fechaEntrega: DateTime
+  fechaSalida: DateTime
+  fotoEvidenciaUrl: String
+  idEntrega: Int!
+  idPedido: Int!
+  idRepartidor: Int
+  latitudEntrega: Float
+  longitudEntrega: Float
+  observacion: String
+}
+
+type Document {
+  estado: String!
+  fechaCarga: DateTime!
+  fechaVencimiento: DateTime
+  idDocumento: Int!
+  idProducto: Int
+  idProveedor: Int
+  nombre: String!
+  tipoDocumento: String!
+  urlArchivo: String!
+}
+
+type InventoryMovement {
+  cantidad: Int!
+  fechaMovimiento: DateTime!
+  idMovimiento: Int!
+  idProducto: Int!
+  idUsuario: Int!
+  motivo: String
+  stockAnterior: Int!
+  stockNuevo: Int!
+  tipoMovimiento: String!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+type LowStockProduct {
+  idProducto: Int!
+  nombre: String!
+  stockActual: Int!
+  stockMinimo: Int!
+}
+
+input MarkBlockchainRecordInput {
+  idRegistro: Int!
+  redBlockchain: String!
+  txHash: String!
+}
+
+type Mutation {
+  assignDeliveryDriver(input: AssignDeliveryDriverInput!): Delivery!
+  assignRoleToUser(idRol: Int!, idUsuario: Int!): User!
+  attendAlert(idAlerta: Int!): Alert!
+  cancelOrder(idPedido: Int!): Order!
+  cancelPurchase(input: CancelPurchaseInput!): Purchase!
+  cancelSale(input: CancelSaleInput!): Sale!
+  createAlert(input: CreateAlertInput!): Alert!
+  createBlockchainRecord(input: CreateBlockchainRecordInput!): BlockchainRecord!
+  createBrand(input: CreateBrandInput!): Brand!
+  createCategory(input: CreateCategoryInput!): Category!
+  createCustomer(input: CreateCustomerInput!): Customer!
+  createDelivery(input: CreateDeliveryInput!): Delivery!
+  createDocument(input: CreateDocumentInput!): Document!
+  createInventoryMovement(input: CreateInventoryMovementInput!): InventoryMovement!
+  createOrder(input: CreateOrderInput!): Order!
+  createProduct(input: CreateProductInput!): Product!
+  createPurchase(input: CreatePurchaseInput!): Purchase!
+  createRole(input: CreateRoleInput!): Role!
+  createSale(input: CreateSaleInput!): Sale!
+  createSupplier(input: CreateSupplierInput!): Supplier!
+  createUnit(input: CreateUnitInput!): Unit!
+  createUser(input: CreateUserInput!): User!
+  createWarehouse(input: CreateWarehouseInput!): Warehouse!
+  createWarehouseLocation(input: CreateLocationInput!): WarehouseLocation!
+  deactivateBrand(idMarca: Int!): Brand!
+  deactivateCategory(idCategoria: Int!): Category!
+  deactivateCustomer(idCliente: Int!): Customer!
+  deactivateDocument(idDocumento: Int!): Document!
+  deactivateProduct(idProducto: Int!): Product!
+  deactivateSupplier(idProveedor: Int!): Supplier!
+  deactivateUser(idUsuario: Int!): User!
+  deactivateWarehouse(idAlmacen: Int!): Warehouse!
+  deleteRole(idRol: Int!): Role!
+  deleteUnit(idUnidad: Int!): Unit!
+  deleteWarehouseLocation(idUbicacion: Int!): WarehouseLocation!
+  generateStockAlerts: [Alert!]!
+  ignoreAlert(idAlerta: Int!): Alert!
+  login(input: LoginInput!): AuthResponse!
+  markBlockchainRecordAsError(idRegistro: Int!): BlockchainRecord!
+  markBlockchainRecordAsRegistered(input: MarkBlockchainRecordInput!): BlockchainRecord!
+  updateBrand(input: UpdateBrandInput!): Brand!
+  updateCategory(input: UpdateCategoryInput!): Category!
+  updateCustomer(input: UpdateCustomerInput!): Customer!
+  updateDeliveryStatus(input: UpdateDeliveryStatusInput!): Delivery!
+  updateDocument(input: UpdateDocumentInput!): Document!
+  updateOrderStatus(input: UpdateOrderStatusInput!): Order!
+  updateProduct(input: UpdateProductInput!): Product!
+  updateRole(input: UpdateRoleInput!): Role!
+  updateSupplier(input: UpdateSupplierInput!): Supplier!
+  updateUnit(input: UpdateUnitInput!): Unit!
+  updateUser(input: UpdateUserInput!): User!
+  updateWarehouse(input: UpdateWarehouseInput!): Warehouse!
+  updateWarehouseLocation(input: UpdateLocationInput!): WarehouseLocation!
+}
+
+type Order {
+  detalles: [OrderDetail!]
+  estado: String!
+  fechaPedido: DateTime!
+  idCliente: Int
+  idPedido: Int!
+  idUsuarioRegistro: Int
+  observacion: String
+  origen: String!
+  totalEstimado: Float
+}
+
+type OrderDetail {
+  cantidad: Int!
+  idDetallePedido: Int!
+  idPedido: Int!
+  idProducto: Int!
+  precioEstimado: Float!
+  subtotal: Float!
+}
+
+type Product {
+  codigoBarras: String
+  descripcion: String
+  estado: String!
+  fechaCreacion: DateTime!
+  idCategoria: Int!
+  idMarca: Int
+  idProducto: Int!
+  idUbicacion: Int
+  idUnidad: Int!
+  nombre: String!
+  precioCompraReferencia: Float
+  precioVenta: Float!
+  stockActual: Int!
+  stockMinimo: Int!
+}
+
+type Purchase {
+  detalles: [PurchaseDetail!]
+  estado: String!
+  fechaCompra: DateTime!
+  idCompra: Int!
+  idProveedor: Int!
+  idUsuario: Int!
+  observacion: String
+  total: Float!
+}
+
+type PurchaseDetail {
+  cantidad: Int!
+  idCompra: Int!
+  idDetalleCompra: Int!
+  idProducto: Int!
+  precioUnitario: Float!
+  subtotal: Float!
+}
+
+type Query {
+  alerts: [Alert!]!
+  blockchainRecord(idRegistro: Int!): BlockchainRecord!
+  blockchainRecords: [BlockchainRecord!]!
+  brand(idMarca: Int!): Brand!
+  brands: [Brand!]!
+  categories: [Category!]!
+  category(idCategoria: Int!): Category!
+  customer(idCliente: Int!): Customer!
+  customers: [Customer!]!
+  dashboardSummary: DashboardSummary!
+  deliveries: [Delivery!]!
+  delivery(idEntrega: Int!): Delivery!
+  deliveryByOrder(idPedido: Int!): Delivery!
+  document(idDocumento: Int!): Document!
+  documents: [Document!]!
+  documentsByProduct(idProducto: Int!): [Document!]!
+  documentsBySupplier(idProveedor: Int!): [Document!]!
+  healthCheck: String!
+  inventoryMovements: [InventoryMovement!]!
+  inventoryMovementsByProduct(idProducto: Int!): [InventoryMovement!]!
+  lowStockProducts: [LowStockProduct!]!
+  order(idPedido: Int!): Order!
+  orders: [Order!]!
+  pendingAlerts: [Alert!]!
+  product(idProducto: Int!): Product!
+  products: [Product!]!
+  purchase(idCompra: Int!): Purchase!
+  purchases: [Purchase!]!
+  role(idRol: Int!): Role!
+  roles: [Role!]!
+  sale(idVenta: Int!): Sale!
+  sales: [Sale!]!
+  supplier(idProveedor: Int!): Supplier!
+  suppliers: [Supplier!]!
+  topSellingProducts: [TopSellingProduct!]!
+  unit(idUnidad: Int!): Unit!
+  units: [Unit!]!
+  user(idUsuario: Int!): User!
+  users: [User!]!
+  warehouse(idAlmacen: Int!): Warehouse!
+  warehouses: [Warehouse!]!
+}
+
+type Role {
+  descripcion: String
+  idRol: Int!
+  nombre: String!
+}
+
+type Sale {
+  detalles: [SaleDetail!]
+  estado: String!
+  fechaVenta: DateTime!
+  idCliente: Int
+  idUsuario: Int!
+  idVenta: Int!
+  metodoPago: String!
+  observacion: String
+  total: Float!
+}
+
+type SaleDetail {
+  cantidad: Int!
+  idDetalleVenta: Int!
+  idProducto: Int!
+  idVenta: Int!
+  precioUnitario: Float!
+  subtotal: Float!
+}
+
+type Supplier {
+  direccion: String
+  email: String
+  estado: String!
+  fechaRegistro: DateTime!
+  idProveedor: Int!
+  nit: String
+  nombre: String!
+  telefono: String
+}
+
+type TopSellingProduct {
+  cantidadVendida: Int!
+  idProducto: Int!
+  nombre: String!
+  totalVendido: Float!
+}
+
+type Unit {
+  abreviatura: String!
+  idUnidad: Int!
+  nombre: String!
+}
+
+input UpdateBrandInput {
+  descripcion: String
+  idMarca: Int!
+  nombre: String
+}
+
+input UpdateCategoryInput {
+  descripcion: String
+  idCategoria: Int!
+  nombre: String
+}
+
+input UpdateCustomerInput {
+  apellido: String
+  direccion: String
+  email: String
+  idCliente: Int!
+  nitCi: String
+  nombre: String
+  telefono: String
+  tipoCliente: String
+}
+
+input UpdateDeliveryStatusInput {
+  estado: String!
+  fotoEvidenciaUrl: String
+  idEntrega: Int!
+  latitudEntrega: Float
+  longitudEntrega: Float
+  observacion: String
+}
+
+input UpdateDocumentInput {
+  fechaVencimiento: String
+  idDocumento: Int!
+  idProducto: Int
+  idProveedor: Int
+  nombre: String
+  tipoDocumento: String
+  urlArchivo: String
+}
+
+input UpdateLocationInput {
+  descripcion: String
+  estante: String
+  idUbicacion: Int!
+  nivel: String
+  pasillo: String
+}
+
+input UpdateOrderStatusInput {
+  estado: String!
+  idPedido: Int!
+}
+
+input UpdateProductInput {
+  codigoBarras: String
+  descripcion: String
+  idCategoria: Int
+  idMarca: Int
+  idProducto: Int!
+  idUbicacion: Int
+  idUnidad: Int
+  nombre: String
+  precioCompraReferencia: Float
+  precioVenta: Float
+  stockActual: Int
+  stockMinimo: Int
+}
+
+input UpdateRoleInput {
+  descripcion: String
+  idRol: Int!
+  nombre: String
+}
+
+input UpdateSupplierInput {
+  direccion: String
+  email: String
+  idProveedor: Int!
+  nit: String
+  nombre: String
+  telefono: String
+}
+
+input UpdateUnitInput {
+  abreviatura: String
+  idUnidad: Int!
+  nombre: String
+}
+
+input UpdateUserInput {
+  apellido: String
+  email: String
+  idUsuario: Int!
+  nombre: String
+  telefono: String
+}
+
+input UpdateWarehouseInput {
+  descripcion: String
+  direccion: String
+  idAlmacen: Int!
+  nombre: String
+}
+
+type User {
+  apellido: String!
+  email: String!
+  estado: String!
+  fechaCreacion: DateTime!
+  idUsuario: Int!
+  nombre: String!
+  roles: [UserRoleInfo!]
+  telefono: String
+}
+
+type UserRoleInfo {
+  descripcion: String
+  idRol: Int!
+  nombre: String!
+}
+
+type Warehouse {
+  descripcion: String
+  direccion: String
+  estado: String!
+  idAlmacen: Int!
+  nombre: String!
+  ubicaciones: [WarehouseLocation!]
+}
+
+type WarehouseLocation {
+  descripcion: String
+  estante: String
+  idUbicacion: Int!
+  nivel: String
+  pasillo: String
+}

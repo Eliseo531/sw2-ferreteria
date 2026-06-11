@@ -1,0 +1,71 @@
+<div class="page-header">
+  <div>
+    <h1>Inteligencia Artificial</h1>
+    <p>Reconocimiento de productos, predicción de demanda y segmentación de clientes</p>
+  </div>
+</div>
+
+<div *ngIf="errorMessage" class="error">
+  {{ errorMessage }}
+</div>
+
+<section class="ai-grid">
+  <div class="card">
+    <h2>Reconocimiento de producto</h2>
+    <p>Sube una imagen llamada martillo.jpg, taladro.jpg, cemento.jpg, pintura.jpg, etc.</p>
+
+    <input type="file" accept="image/*" (change)="onFileSelected($event)" />
+
+    <button (click)="classifyProduct()" [disabled]="loadingImage">
+      {{ loadingImage ? 'Analizando...' : 'Clasificar imagen' }}
+    </button>
+
+    <div class="result" *ngIf="imageResult">
+      <strong>Producto:</strong> {{ imageResult.product }} <br />
+      <strong>Categoría:</strong> {{ imageResult.category }} <br />
+      <strong>Confianza:</strong> {{ imageResult.confidence }}
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Predicción de demanda</h2>
+    <p>Consulta la demanda estimada de un producto.</p>
+
+    <label>ID Producto</label>
+    <input type="number" [(ngModel)]="productId" />
+
+    <button (click)="predictDemand()" [disabled]="loadingDemand">
+      {{ loadingDemand ? 'Calculando...' : 'Predecir demanda' }}
+    </button>
+
+    <div class="result" *ngIf="demandResult">
+      <strong>Producto:</strong> {{ demandResult.product_name }} <br />
+      <strong>Categoría:</strong> {{ demandResult.category }} <br />
+      <strong>Demanda base:</strong> {{ demandResult.base_demand }} <br />
+      <strong>Factor temporada:</strong> {{ demandResult.season_factor }} <br />
+      <strong>Unidades previstas:</strong> {{ demandResult.predicted_units_next_month }} <br />
+      <strong>Recomendación:</strong> {{ demandResult.recommendation }}
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Segmentación de cliente</h2>
+    <p>Clasifica al cliente según frecuencia, gasto y categoría principal.</p>
+
+    <label>ID Cliente</label>
+    <input type="number" [(ngModel)]="customerId" />
+
+    <button (click)="segmentCustomer()" [disabled]="loadingSegment">
+      {{ loadingSegment ? 'Analizando...' : 'Segmentar cliente' }}
+    </button>
+
+    <div class="result" *ngIf="segmentResult">
+      <strong>Cliente:</strong> {{ segmentResult.customer_name }} <br />
+      <strong>Frecuencia:</strong> {{ segmentResult.purchase_frequency }} <br />
+      <strong>Gasto mensual:</strong> Bs {{ segmentResult.monthly_spending }} <br />
+      <strong>Categoría:</strong> {{ segmentResult.main_category }} <br />
+      <strong>Segmento:</strong> {{ segmentResult.segment }} <br />
+      <strong>Recomendación:</strong> {{ segmentResult.recommendation }}
+    </div>
+  </div>
+</section>

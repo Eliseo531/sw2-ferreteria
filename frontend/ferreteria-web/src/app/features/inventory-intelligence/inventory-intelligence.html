@@ -1,0 +1,71 @@
+<div class="page-header">
+  <div>
+    <h1>Inteligencia de Inventario</h1>
+    <p>Análisis masivo con Machine Learning para detectar productos críticos</p>
+  </div>
+
+  <button (click)="analyzeInventory()" [disabled]="loading">
+    {{ loading ? 'Analizando inventario...' : 'Analizar inventario con ML' }}
+  </button>
+</div>
+
+<div *ngIf="errorMessage" class="error">
+  {{ errorMessage }}
+</div>
+
+<div class="summary-grid" *ngIf="analysisResult">
+  <div class="summary-card">
+    <span>Productos analizados</span>
+    <strong>{{ analysisResult.total_products_analyzed }}</strong>
+  </div>
+
+  <div class="summary-card danger">
+    <span>Productos críticos</span>
+    <strong>{{ analysisResult.critical_products }}</strong>
+  </div>
+
+  <div class="summary-card warning">
+    <span>Reposiciones sugeridas</span>
+    <strong>{{ analysisResult.recommended_restock }}</strong>
+  </div>
+</div>
+
+<div class="table-card" *ngIf="analysisResult">
+  <h2>Productos que requieren atención</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Producto</th>
+        <th>Stock</th>
+        <th>Stock mínimo</th>
+        <th>Ventas mensuales</th>
+        <th>Demanda ML</th>
+        <th>Rotación</th>
+        <th>Clasificación</th>
+        <th>Acción ML</th>
+        <th>Cantidad sugerida</th>
+        <th>Prioridad</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let item of analysisResult.products">
+        <td>{{ item.product_name }}</td>
+        <td>{{ item.current_stock }}</td>
+        <td>{{ item.stock_minimum }}</td>
+        <td>{{ item.monthly_sales }}</td>
+        <td>{{ item.predicted_demand }}</td>
+        <td>{{ item.stock_rotation }}</td>
+        <td>{{ item.category }}</td>
+        <td>{{ item.recommended_action }}</td>
+        <td>{{ item.quantity_to_buy }}</td>
+        <td>
+          <span class="priority" [ngClass]="getPriorityClass(item.priority)">
+            {{ item.priority }}
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

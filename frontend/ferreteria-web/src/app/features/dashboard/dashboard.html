@@ -1,0 +1,66 @@
+<div class="dashboard-container">
+  <header class="topbar">
+    <div>
+      <h1>Dashboard Ferretería</h1>
+      <p>Resumen general del ERP</p>
+    </div>
+  </header>
+
+  <div *ngIf="loading" class="message">Cargando dashboard...</div>
+
+  <div *ngIf="errorMessage" class="error">
+    {{ errorMessage }}
+  </div>
+
+  <section class="cards" *ngIf="summary && !loading">
+    <div class="card">
+      <span>Productos</span>
+      <strong>{{ summary.totalProductos }}</strong>
+    </div>
+
+    <div class="card">
+      <span>Clientes</span>
+      <strong>{{ summary.totalClientes }}</strong>
+    </div>
+
+    <div class="card">
+      <span>Proveedores</span>
+      <strong>{{ summary.totalProveedores }}</strong>
+    </div>
+
+    <div class="card">
+      <span>Ventas</span>
+      <strong>{{ summary.totalVentas }}</strong>
+    </div>
+
+    <div class="card">
+      <span>Compras</span>
+      <strong>{{ summary.totalCompras }}</strong>
+    </div>
+
+    <div class="card warning">
+      <span>Pedidos pendientes</span>
+      <strong>{{ summary.pedidosPendientes }}</strong>
+    </div>
+
+    <div class="card warning">
+      <span>Entregas pendientes</span>
+      <strong>{{ summary.entregasPendientes }}</strong>
+    </div>
+
+    <div class="card danger">
+      <span>Alertas pendientes</span>
+      <strong>{{ summary.alertasPendientes }}</strong>
+    </div>
+
+    <div class="card money">
+      <span>Monto ventas</span>
+      <strong>Bs {{ summary.montoTotalVentas }}</strong>
+    </div>
+
+    <div class="card money">
+      <span>Monto compras</span>
+      <strong>Bs {{ summary.montoTotalCompras }}</strong>
+    </div>
+  </section>
+</div>

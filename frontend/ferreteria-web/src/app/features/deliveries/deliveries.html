@@ -1,0 +1,143 @@
+<div class="page-header">
+  <div>
+    <h1>Entregas</h1>
+    <p>Gestión de reparto, dirección, GPS y evidencia de entrega</p>
+  </div>
+
+  <button (click)="showForm = !showForm">
+    {{ showForm ? 'Cancelar' : 'Nueva entrega' }}
+  </button>
+</div>
+
+<div class="form-card" *ngIf="showForm">
+  <h2>Nueva entrega</h2>
+
+  <form (ngSubmit)="createDelivery()">
+    <div class="form-grid">
+      <div class="form-group">
+        <label>ID Pedido</label>
+        <input name="idPedido" type="number" [(ngModel)]="form.idPedido" />
+      </div>
+
+      <div class="form-group">
+        <label>Repartidor</label>
+        <select name="idRepartidor" [(ngModel)]="form.idRepartidor">
+          <option [ngValue]="null">Seleccione un repartidor</option>
+
+          <option *ngFor="let repartidor of repartidores" [ngValue]="repartidor.idUsuario">
+            {{ repartidor.nombre }} {{ repartidor.apellido }} - {{ repartidor.email }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Latitud</label>
+        <input name="latitudEntrega" type="number" [(ngModel)]="form.latitudEntrega" />
+      </div>
+
+      <div class="form-group">
+        <label>Longitud</label>
+        <input name="longitudEntrega" type="number" [(ngModel)]="form.longitudEntrega" />
+      </div>
+    </div>
+
+    <div class="form-group description-group">
+      <label>Dirección de entrega</label>
+      <textarea name="direccionEntrega" [(ngModel)]="form.direccionEntrega"></textarea>
+    </div>
+
+    <div class="form-group description-group">
+      <label>Observación</label>
+      <textarea name="observacion" [(ngModel)]="form.observacion"></textarea>
+    </div>
+
+    <button type="submit" [disabled]="saving">
+      {{ saving ? 'Guardando...' : 'Registrar entrega' }}
+    </button>
+  </form>
+</div>
+
+<div *ngIf="successMessage" class="success">
+  {{ successMessage }}
+</div>
+
+<div *ngIf="loading" class="message">Cargando entregas...</div>
+
+<div *ngIf="errorMessage" class="error">
+  {{ errorMessage }}
+</div>
+
+<div class="table-card" *ngIf="!loading && !errorMessage">
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Pedido</th>
+        <th>Repartidor</th>
+        <th>Estado</th>
+        <th>Dirección</th>
+        <th>GPS</th>
+        <th>Fecha salida</th>
+        <th>Fecha entrega</th>
+        <th>Cambiar estado</th>
+        <th>Asignar repartidor</th>
+        <th>Evidencia</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let delivery of deliveries">
+        <td>{{ delivery.idEntrega }}</td>
+        <td>{{ delivery.idPedido }}</td>
+        <td>{{ getRepartidorName(delivery.idRepartidor) }}</td>
+
+        <td>
+          <span class="badge">{{ delivery.estado }}</span>
+        </td>
+
+        <td>{{ delivery.direccionEntrega }}</td>
+
+        <td>
+          {{ delivery.latitudEntrega || '-' }},
+          {{ delivery.longitudEntrega || '-' }}
+        </td>
+
+        <td>{{ delivery.fechaSalida ? (delivery.fechaSalida | date: 'short') : '-' }}</td>
+        <td>{{ delivery.fechaEntrega ? (delivery.fechaEntrega | date: 'short') : '-' }}</td>
+
+        <td>
+          <select
+            [ngModel]="delivery.estado"
+            (ngModelChange)="updateStatus(delivery.idEntrega, $event)"
+          >
+            <option value="PENDIENTE">PENDIENTE</option>
+            <option value="EN_CAMINO">EN_CAMINO</option>
+            <option value="ENTREGADA">ENTREGADA</option>
+            <option value="FALLIDA">FALLIDA</option>
+          </select>
+        </td>
+
+        <td>
+          <select #driverSelect class="small-input" [value]="delivery.idRepartidor">
+            <option *ngFor="let repartidor of repartidores" [value]="repartidor.idUsuario">
+              {{ repartidor.nombre }} {{ repartidor.apellido }} (ID: {{ repartidor.idUsuario }})
+            </option>
+          </select>
+
+          <button
+            class="small-button"
+            (click)="assignDriver(delivery.idEntrega, +driverSelect.value)"
+          >
+            Asignar
+          </button>
+        </td>
+
+        <td>
+          <button class="small-button" (click)="viewEvidence(delivery.idEntrega)">
+            Ver evidencia
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

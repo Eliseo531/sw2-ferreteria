@@ -1,0 +1,40 @@
+<div class="page-header">
+  <div>
+    <h1>Repartidores</h1>
+    <p>Usuarios con rol REPARTIDOR para asignación de entregas</p>
+  </div>
+</div>
+
+<div *ngIf="loading" class="message">Cargando repartidores...</div>
+
+<div *ngIf="errorMessage" class="error">
+  {{ errorMessage }}
+</div>
+
+<div class="table-card" *ngIf="!loading && !errorMessage">
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Teléfono</th>
+        <th>Rol</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let driver of drivers">
+        <td>{{ driver.idUsuario }}</td>
+        <td>{{ driver.nombre }} {{ driver.apellido }}</td>
+        <td>{{ driver.email }}</td>
+        <td>{{ driver.telefono || '-' }}</td>
+        <td>REPARTIDOR</td>
+        <td>
+          <span class="badge">{{ driver.estado }}</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

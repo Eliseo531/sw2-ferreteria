@@ -1,0 +1,102 @@
+<div class="page-header">
+  <div>
+    <h1>Usuarios</h1>
+    <p>Gestión de usuarios y asignación de roles</p>
+  </div>
+
+  <button (click)="showForm = !showForm">
+    {{ showForm ? 'Cancelar' : 'Nuevo usuario' }}
+  </button>
+</div>
+
+<div class="form-card" *ngIf="showForm">
+  <h2>{{ editing ? 'Editar usuario' : 'Nuevo usuario' }}</h2>
+
+  <form (ngSubmit)="editing ? updateUser() : createUser()">
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Nombre</label>
+        <input name="nombre" [(ngModel)]="form.nombre" required />
+      </div>
+
+      <div class="form-group">
+        <label>Apellido</label>
+        <input name="apellido" [(ngModel)]="form.apellido" required />
+      </div>
+
+      <div class="form-group">
+        <label>Email</label>
+        <input name="email" type="email" [(ngModel)]="form.email" required />
+      </div>
+
+      <div class="form-group" *ngIf="!editing">
+        <label>Contraseña</label>
+        <input name="password" type="password" [(ngModel)]="form.password" required />
+      </div>
+
+      <div class="form-group">
+        <label>Teléfono</label>
+        <input name="telefono" [(ngModel)]="form.telefono" />
+      </div>
+
+      <div class="form-group">
+        <label>Rol</label>
+        <select name="idRol" [(ngModel)]="form.idRol">
+          <option *ngFor="let role of roles" [ngValue]="role.idRol">
+            {{ role.nombre }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="saving">
+      {{ saving ? 'Guardando...' : editing ? 'Actualizar usuario' : 'Crear usuario' }}
+    </button>
+  </form>
+</div>
+
+<div *ngIf="successMessage" class="success">
+  {{ successMessage }}
+</div>
+
+<div *ngIf="loading" class="message">Cargando usuarios...</div>
+
+<div *ngIf="errorMessage" class="error">
+  {{ errorMessage }}
+</div>
+
+<div class="table-card" *ngIf="!loading && !errorMessage">
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Usuario</th>
+        <th>Email</th>
+        <th>Teléfono</th>
+        <th>Roles</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.idUsuario }}</td>
+        <td>{{ user.nombre }} {{ user.apellido }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.telefono || '-' }}</td>
+        <td>
+          <span class="badge" *ngFor="let role of user.roles">
+            {{ role.nombre }}
+          </span>
+        </td>
+        <td>
+          <span class="badge">{{ user.estado }}</span>
+        </td>
+        <td>
+          <button class="edit-button" (click)="editUser(user)">Editar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

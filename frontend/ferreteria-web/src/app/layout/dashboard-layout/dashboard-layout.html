@@ -1,0 +1,67 @@
+<div class="layout">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">🔧</div>
+      <div>
+        <h2>Ferretería ERP</h2>
+        <small>Gestión empresarial</small>
+      </div>
+    </div>
+
+    <div class="user-card" *ngIf="user">
+      <div class="avatar">
+        {{ user.nombre.charAt(0) }}
+      </div>
+
+      <div>
+        <strong>{{ user.nombre }} {{ user.apellido }}</strong>
+        <span>{{ user.roles?.[0]?.nombre || 'SIN ROL' }}</span>
+      </div>
+    </div>
+
+    <nav>
+      <a routerLink="/dashboard">📊 Dashboard</a>
+      <a routerLink="/users" *ngIf="hasRole(['ADMINISTRADOR'])"> 👤 Usuarios </a>
+
+      <a routerLink="/products" *ngIf="hasRole(['ADMINISTRADOR', 'ALMACENERO', 'VENDEDOR'])">
+        📦 Productos
+      </a>
+
+      <a routerLink="/customers" *ngIf="hasRole(['ADMINISTRADOR', 'VENDEDOR'])"> 👥 Clientes </a>
+
+      <a routerLink="/sales" *ngIf="hasRole(['ADMINISTRADOR', 'VENDEDOR'])"> 🧾 Ventas </a>
+
+      <a routerLink="/purchases" *ngIf="hasRole(['ADMINISTRADOR', 'ALMACENERO'])"> 🛒 Compras </a>
+
+      <a routerLink="/documents" *ngIf="hasRole(['ADMINISTRADOR', 'ALMACENERO', 'VENDEDOR'])">
+        📄 Documentos
+      </a>
+
+      <a routerLink="/ai" *ngIf="hasRole(['ADMINISTRADOR', 'ALMACENERO'])"> 🤖 IA </a>
+      <a routerLink="/inventory" *ngIf="hasRole(['ADMINISTRADOR', 'ALMACENERO'])">
+        📦 Inventario
+      </a>
+      <a routerLink="/orders" *ngIf="hasRole(['ADMINISTRADOR', 'VENDEDOR', 'ALMACENERO'])">
+        📋 Pedidos
+      </a>
+      <a
+        routerLink="/deliveries"
+        *ngIf="hasRole(['ADMINISTRADOR', 'VENDEDOR', 'ALMACENERO', 'REPARTIDOR'])"
+      >
+        🚚 Entregas
+      </a>
+
+      <a routerLink="/drivers" *ngIf="hasRole(['ADMINISTRADOR'])"> 🏍️ Repartidores </a>
+    </nav>
+
+    <a routerLink="/inventory-intelligence" *ngIf="hasRole(['ADMINISTRADOR', 'ALMACENERO'])">
+      🧠 Inteligencia Inventario
+    </a>
+
+    <button (click)="logout()">Cerrar sesión</button>
+  </aside>
+
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

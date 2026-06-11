@@ -1,0 +1,30 @@
+# Node
+node_modules/
+dist/
+build/
+
+# Angular
+.angular/
+
+# Expo
+.expo/
+
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Java
+target/
+
+# Entornos
+.env
+.env.*
+
+# IDE
+.vscode/
+.idea/
+
+# Sistema
+.DS_Store
+Thumbs.db
