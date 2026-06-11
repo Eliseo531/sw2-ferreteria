@@ -4,8 +4,7 @@ import { provideApollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { ApolloLink, InMemoryCache } from '@apollo/client/core';
 
-const uri = 'https://cattle-render-farmer-incredible.trycloudflare.com/graphql';
-
+const uri = 'https://upon-limiting-laptops-computation.trycloudflare.com/graphql';
 export const graphqlProvider: ApplicationConfig['providers'] = [
   provideHttpClient(),
 
