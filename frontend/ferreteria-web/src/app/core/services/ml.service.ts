@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class MlService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8002/ml';
+  private apiUrl = 'http://167.172.134.57:8002/ml';
 
   predictDemand(input: any) {
     return this.http.post<any>(`${this.apiUrl}/predict-demand`, input);
