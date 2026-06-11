@@ -6,7 +6,7 @@ import { Injectable, inject } from '@angular/core';
 })
 export class AiService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8002/ai';
+  private apiUrl = 'http://167.172.134.57:8002/ai';
 
   classifyProduct(file: File) {
     const formData = new FormData();
