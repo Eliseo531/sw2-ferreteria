@@ -4,7 +4,7 @@ import { provideApollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { ApolloLink, InMemoryCache } from '@apollo/client/core';
 
-const uri = 'http://localhost:3000/graphql';
+const uri = 'http://167.172.134.57:3000/graphql';
 
 export const graphqlProvider: ApplicationConfig['providers'] = [
   provideHttpClient(),
